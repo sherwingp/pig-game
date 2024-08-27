@@ -18,6 +18,7 @@ export class Game {
     return this.players[this.currentPlayerIndex];
   }
 
+// Returns true if player can roll again, false if the turn ends
   public rollDice(): boolean {
     try {
       const rolls = this.currentTurn.rollDice();
@@ -30,16 +31,16 @@ export class Game {
         } else {
           console.log('Rolled a 1! Round points are lost.');
         }
-        this.endTurn(); // End turn on rolling 1 or snake eyes
-        return false; // Indicate turn ended
+        this.endTurn();
+        return false;
       } else {
         console.log(`Round score: ${this.currentTurn.getRoundScore()}`);
-        return true; // Indicate turn can continue
+        return true;
       }
     } catch (error: any) {
       console.log('Error during turn:', error.message);
       this.endTurn();
-      return false; // Indicate turn ended due to an error
+      return false;
     }
   }
 
@@ -51,7 +52,7 @@ export class Game {
   }
 
   private endTurn(): void {
-    this.currentTurn = new Turn(); // Reset the turn for the next player
+    this.currentTurn = new Turn();
     this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.players.length;
   }
 
